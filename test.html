@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Notes Plugin Test</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .editor {
+            border: 1px solid #ccc;
+            padding: 20px;
+            min-height: 300px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        button {
+            background-color: #5c6bc0;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3f51b5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sticky Notes Plugin Test</h1>
+    <p>This is a simple test environment for the Sticky Notes plugin. Click inside the editor area and press the button to create a sticky note.</p>
+    
+    <div class="editor" id="editor" contenteditable="true">
+        <h2>Sample Document</h2>
+        <p>This is a sample document to test the Sticky Notes plugin. Click anywhere in this text and press the "Create Sticky Note" button.</p>
+        <p>The sticky note should appear at your cursor position.</p>
+        <p>Try it now! Click here and press the button below.</p>
+    </div>
+    
+    <button id="createStickyNote">Create Sticky Note</button>
+    
+    <script>
+        // Simple mock of the Obsidian environment for testing
+        const mockObsidian = {
+            Notice: class Notice {
+                constructor(message) {
+                    alert(message);
+                }
+            },
+            vault: {
+                create: async (filename, content) => {
+                    console.log(`Note saved: ${filename}`);
+                    console.log(`Content: ${content}`);
+                    return true;
+                }
+            }
+        };
+        
+        // Mock editor and view
+        const mockEditor = {
+            getCursor: () => {
+                const selection = window.getSelection();
+                if (selection.rangeCount === 0) return { line: 0, ch: 0 };
+                
+                const range = selection.getRangeAt(0);
+                return {
+                    line: 0, // Simplified for this demo
+                    ch: range.startOffset
+                };
+            },
+            posToOffset: (cursor) => cursor.ch
+        };
+        
+        const mockView = {
+            contentEl: document.getElementById('editor'),
+            editor: mockEditor
+        };
+        
+        // Create a simplified version of the plugin for testing
+        class TestStickyNotes {
+            constructor() {
+                this.stickyNoteEl = null;
+                this.textAreaEl = null;
+                this.app = mockObsidian;
+            }
+            
+            createStickyNote() {
+                // Remove any existing sticky note
+                this.removeStickyNote();
+                
+                // Get cursor coordinates
+                const coords = this.getCursorCoordinates();
+                if (!coords) return;
+                
+                // Create sticky note element
+                this.stickyNoteEl = document.createElement('div');
+                this.stickyNoteEl.classList.add('sticky-note');
+                this.stickyNoteEl.style.position = 'absolute';
+                this.stickyNoteEl.style.left = `${coords.left}px`;
+                this.stickyNoteEl.style.top = `${coords.top}px`;
+                
+                // Create header with close button
+                const headerEl = document.createElement('div');
+                headerEl.classList.add('sticky-note-header');
+                
+                const closeButton = document.createElement('span');
+                closeButton.classList.add('sticky-note-close');
+                closeButton.textContent = '✕';
+                closeButton.addEventListener('click', () => {
+                    this.removeStickyNote();
+                });
+                
+                headerEl.appendChild(closeButton);
+                this.stickyNoteEl.appendChild(headerEl);
+                
+                // Create textarea for input
+                this.textAreaEl = document.createElement('textarea');
+                this.textAreaEl.placeholder = 'Type your note here...';
+                
+                // Handle Enter key to save the note
+                this.textAreaEl.addEventListener('keydown', async (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        const noteContent = this.textAreaEl.value;
+                        if (noteContent) {
+                            await this.saveAsNewNote(noteContent);
+                        }
+                        this.removeStickyNote();
+                    }
+                    // Handle Escape key to cancel
+                    if (e.key === 'Escape') {
+                        this.removeStickyNote();
+                    }
+                });
+                
+                // Add textarea to sticky note
+                this.stickyNoteEl.appendChild(this.textAreaEl);
+                
+                // Add sticky note to the editor
+                document.getElementById('editor').appendChild(this.stickyNoteEl);
+                
+                // Focus the textarea
+                this.textAreaEl.focus();
+            }
+            
+            getCursorCoordinates() {
+                try {
+                    const selection = window.getSelection();
+                    if (selection.rangeCount === 0) return null;
+                    
+                    const range = selection.getRangeAt(0);
+                    const rect = range.getBoundingClientRect();
+                    
+                    // Get the editor's position
+                    const editorRect = document.getElementById('editor').getBoundingClientRect();
+                    
+                    return {
+                        left: rect.left - editorRect.left,
+                        top: rect.top - editorRect.top
+                    };
+                } catch (error) {
+                    console.error('Error getting cursor coordinates:', error);
+                    return null;
+                }
+            }
+            
+            removeStickyNote() {
+                if (this.stickyNoteEl && this.stickyNoteEl.parentNode) {
+                    this.stickyNoteEl.parentNode.removeChild(this.stickyNoteEl);
+                    this.stickyNoteEl = null;
+                    this.textAreaEl = null;
+                }
+            }
+            
+            async saveAsNewNote(content) {
+                try {
+                    // Generate a filename based on the first line or current date/time
+                    let title = content.split('\n')[0].trim();
+                    if (!title) {
+                        title = `Note ${new Date().toISOString().replace(/[:.]/g, '-')}`;
+                    }
+                    
+                    // Ensure the filename is valid
+                    const filename = `${title.replace(/[\\/:*?"<>|]/g, '-')}.md`;
+                    
+                    // Create the new file (mock)
+                    await this.app.vault.create(filename, content);
+                    
+                    new this.app.Notice(`Note saved as "${filename}"`);
+                } catch (error) {
+                    console.error('Error saving note:', error);
+                    new this.app.Notice('Failed to save note');
+                }
+            }
+        }
+        
+        // Initialize the test plugin
+        const testPlugin = new TestStickyNotes();
+        
+        // Add event listener to the button
+        document.getElementById('createStickyNote').addEventListener('click', () => {
+            testPlugin.createStickyNote();
+        });
+    </script>
+</body>
+</html> 

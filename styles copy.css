@@ -1,0 +1,38 @@
+/* Sticky Notes Plugin Styles */
+
+.sticky-note {
+  background-color: #ffeb3b;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 200px;
+  min-height: 150px;
+  position: absolute;
+  font-family: var(--font-text);
+}
+
+.sticky-note textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+  background-color: transparent;
+  outline: none;
+  font-family: inherit;
+}
+
+.sticky-note-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+.sticky-note-close {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.sticky-note-close:hover {
+  opacity: 1;
+} 
