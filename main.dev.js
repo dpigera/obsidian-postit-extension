@@ -192,34 +192,62 @@ class StickyNotesPlugin extends Plugin {
         try {
             console.log('Creating sticky note');
             
-            // Get cursor position
+            // Get cursor position for focus restoration and vertical positioning
             const cursor = editor.getCursor();
             
             // Store the active leaf for later focus restoration
             const activeLeaf = this.app.workspace.activeLeaf;
             
-            // Get cursor coordinates in the editor
+            // Get the editor viewport
             const editorViewport = view.contentEl.querySelector('.cm-scroller');
             if (!editorViewport) {
                 console.error('Editor viewport not found');
                 return;
             }
             
-            // Get precise cursor coordinates
-            const coords = this.getCursorCoordinates(editor, view);
-            if (!coords) {
-                console.error('Could not determine cursor coordinates');
+            // Get the editor element
+            const editorEl = view.contentEl.querySelector('.cm-editor');
+            if (!editorEl) {
+                console.error('Editor element not found');
                 return;
             }
-
-            console.log('Cursor coordinates:', coords);
-
+            
+            // Get the line element at the cursor position
+            const lineEl = editorEl.querySelector(`.cm-line:nth-child(${cursor.line + 1})`);
+            if (!lineEl) {
+                console.error('Line element not found');
+                return;
+            }
+            
+            // Get the position of the line element
+            const lineRect = lineEl.getBoundingClientRect();
+            
+            // Get the dimensions of the editor viewport
+            const viewportRect = editorViewport.getBoundingClientRect();
+            
+            // Set initial size for the sticky note
+            const stickyNoteWidth = 200; // Default width from CSS
+            const stickyNoteHeight = 150; // Default height from CSS
+            
             // Create sticky note container
             const containerEl = document.createElement('div');
             containerEl.classList.add('sticky-note');
-            containerEl.style.position = 'absolute';
-            containerEl.style.left = `${coords.left}px`;
-            containerEl.style.top = `${coords.top}px`;
+            
+            // Use fixed positioning to handle scrolling
+            containerEl.style.position = 'fixed';
+            
+            // Position the sticky note at the left edge of the current editor view
+            // and vertically aligned with the cursor
+            // containerEl.style.left = `${viewportRect.left}px`;
+            containerEl.style.left = null;
+            containerEl.style.top = `${lineRect.top}px`;
+            
+            console.log('Positioning sticky note at:', {
+                left: containerEl.style.left,
+                top: containerEl.style.top,
+                editorLeft: viewportRect.left,
+                lineTop: lineRect.top
+            });
             
             // Create header with close button
             const headerEl = document.createElement('div');
