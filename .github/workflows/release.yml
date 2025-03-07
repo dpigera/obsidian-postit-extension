@@ -35,5 +35,5 @@ jobs:
           # Create GitHub release
           gh release create "$tag" \
             --title "Version $tag" \
-            --notes "See [CHANGELOG.md](https://github.com/yourusername/obsidian-sticky-notes/blob/master/CHANGELOG.md) for details." \
+            --notes "See [CHANGELOG.md](https://github.com/yourusername/sticky-notes/blob/master/CHANGELOG.md) for details." \
             $tag.zip 

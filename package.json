@@ -1,5 +1,5 @@
 {
-  "name": "obsidian-sticky-notes",
+  "name": "sticky-notes",
   "version": "1.0.0",
   "description": "Create sticky notes at cursor position and save them as new notes",
   "main": "main.js",

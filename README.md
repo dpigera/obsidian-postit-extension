@@ -34,10 +34,9 @@ A plugin for [Obsidian](https://obsidian.md) that allows you to create notes inl
 
 ## Usage
 
-1. Place your cursor where you want the sticky note to appear vertically
-2. Use the command palette (Ctrl/Cmd+P) and search for "Create Sticky Note"
-3. Type your note content in the yellow sticky note
-4. Press Enter to save as a new note, or Escape to cancel
+1. Use the command palette (Ctrl/Cmd+P) and search for "Create Sticky Note"
+2. Type your note content in the yellow sticky note
+3. Press Enter to save as a new note, or Escape to cancel
 
 ## Settings
 
