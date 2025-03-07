@@ -12,10 +12,20 @@
   "keywords": [
     "obsidian",
     "plugin",
-    "sticky-notes"
+    "sticky-notes",
+    "notes",
+    "productivity"
   ],
   "author": "Your Name",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpigera/obsidian-postit-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/dpigera/obsidian-postit-extension/issues"
+  },
+  "homepage": "https://github.com/dpigera/obsidian-postit-extension#readme",
   "devDependencies": {
     "builtin-modules": "^3.2.0",
     "esbuild": "0.13.12",

@@ -1,42 +1,55 @@
 # Obsidian Sticky Notes Plugin
 
-A plugin for [Obsidian](https://obsidian.md) that allows you to create sticky notes at your cursor position and quickly save them as new notes.
+A plugin for [Obsidian](https://obsidian.md) that allows you to create notes inline without moving your cursor.
 
 ## Features
 
-- Create a sticky note exactly where your cursor is with a keyboard shortcut
-- Type your note content directly into the sticky note
+- Type 'Sticky' to quickly use Command palette command
+- Specify a default folder for saving your sticky notes
 - Press Enter to save the note as a new file in your vault
 - Press Escape to cancel and close the sticky note
-- Customizable keyboard shortcut
+- Automatically returns focus to your document after saving or closing a sticky note
+
+## Screenshots
+
+![Command}](https://tilt-vc-static.s3.us-east-1.amazonaws.com/obsidian-stickynote-github-pics/Screenshot+2025-03-07+at+11.17.46%E2%80%AFAM.png)
+
+![Note](https://tilt-vc-static.s3.us-east-1.amazonaws.com/obsidian-stickynote-github-pics/Screenshot+2025-03-07+at+11.17.54%E2%80%AFAM.png)
 
 ## Installation
 
-### From Obsidian
+### From Obsidian Community Plugins
 
 1. Open Obsidian
 2. Go to Settings > Community plugins
-3. Disable Safe mode if it's enabled
-4. Click "Browse" and search for "Sticky Notes"
-5. Install the plugin and enable it
+3. Click "Browse" and search for "Sticky Notes"
+4. Install the plugin and enable it
 
 ### Manual Installation
 
-1. Download the latest release from the GitHub repository
+1. Download the latest release from the [GitHub repository](https://github.com/dpigera/obsidian-postit-extension/releases)
 2. Extract the zip file into your Obsidian vault's `.obsidian/plugins/` directory
 3. Reload Obsidian
 4. Enable the plugin in Settings > Community plugins
 
 ## Usage
 
-1. Place your cursor where you want the sticky note to appear
-2. Press the keyboard shortcut (default: `Ctrl+Shift+S`)
+1. Place your cursor where you want the sticky note to appear vertically
+2. Use the command palette (Ctrl/Cmd+P) and search for "Create Sticky Note"
 3. Type your note content in the yellow sticky note
 4. Press Enter to save as a new note, or Escape to cancel
 
 ## Settings
 
-- **Shortcut Key**: Customize the keyboard shortcut used to create sticky notes
+- **Default Folder**: Specify a folder path where sticky notes will be saved. Use "/" for the root folder.
+
+## How It Works
+
+- The sticky note appears at the left side of your document at the same vertical position as your cursor
+- Only one sticky note can exist at a time
+- When you save a note, it creates a new markdown file in your specified default folder
+- The title of the note is derived from the first 15 characters of your content
+- After saving or closing a note, focus returns to your document at the same position
 
 ## Development
 
@@ -55,8 +68,13 @@ This plugin uses JavaScript and follows the Obsidian plugin development guidelin
 2. Run `npm install` to install dependencies
 3. Make changes to `main.dev.js` (not `main.js`)
 4. Run `npm run build` to compile the plugin
-5. Copy the `main.js`, `manifest.json`, and `styles.css` files to your Obsidian vault's `.obsidian/plugins/obsidian-sticky-notes/` directory
+
+## Support
+
+If you find this plugin useful, consider supporting its development:
+
+[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="BuyMeACoffee" width="200">](https://www.buymeacoffee.com/yourusername)
 
 ## License
 
-MIT 
+[MIT](LICENSE) 

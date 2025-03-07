@@ -5,7 +5,9 @@
   "minAppVersion": "0.15.0",
   "description": "Create sticky notes at cursor position and save them as new notes",
   "author": "Your Name",
-  "authorUrl": "https://github.com/yourusername",
+  "authorUrl": "https://github.com/dpigera",
+  "fundingUrl": "https://www.buymeacoffee.com/dpigera",
   "isDesktopOnly": false,
-  "main": "main.js"
+  "main": "main.js",
+  "repository": "https://github.com/dpigera/obsidian-postit-extension"
 } 
