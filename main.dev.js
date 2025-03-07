@@ -538,7 +538,7 @@ class StickyNotesSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                     
                     // Notify user
-                    new Notice(`Default folder set to: ${value}`);
+                    // new Notice(`Default folder set to: ${value}`);
                 }));
     }
 }
