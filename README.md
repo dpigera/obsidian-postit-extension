@@ -11,10 +11,7 @@ A plugin for [Obsidian](https://obsidian.md) that allows you to create notes inl
 - Automatically returns focus to your document after saving or closing a sticky note
 
 ## Screenshots
-
-![Command}](https://tilt-vc-static.s3.us-east-1.amazonaws.com/obsidian-stickynote-github-pics/Screenshot+2025-03-07+at+11.17.46%E2%80%AFAM.png)
-
-![Note](https://tilt-vc-static.s3.us-east-1.amazonaws.com/obsidian-stickynote-github-pics/Screenshot+2025-03-07+at+11.17.54%E2%80%AFAM.png)
+![Demo](https://tilt-vc-static.s3.us-east-1.amazonaws.com/obsidian-stickynote-github-pics/obsidian-demo.gif)
 
 ## Installation
 
