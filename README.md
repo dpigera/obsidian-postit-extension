@@ -69,7 +69,7 @@ This plugin uses JavaScript and follows the Obsidian plugin development guidelin
 
 If you find this plugin useful, consider supporting its development:
 
-[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="BuyMeACoffee" width="200">](https://www.buymeacoffee.com/yourusername)
+[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="BuyMeACoffee" width="200">](https://buymeacoffee.com/dpigera)
 
 ## License
 
